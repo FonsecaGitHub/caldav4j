@@ -61,9 +61,20 @@ public class SchedulePostMethodTest extends BaseTestCase {
 
         Calendar invite = getCalendarResource("scheduling/meeting_invitation.ics");
         Uid myUid = new Uid(new DateTime().toString());
-        ICalendarUtils.addOrReplaceProperty(invite.getComponent(Component.VEVENT), myUid);
+        invite.getComponent(Component.VEVENT).ifPresentOrElse(
+                vEvent -> ICalendarUtils.addOrReplaceProperty(vEvent, myUid),
+                () -> {
+                    throw new IllegalStateException("Missing invite component");
+                }
+        );
+
         Calendar refreshEvent = getCalendarResource("scheduling/meeting_reply.ics");
-        ICalendarUtils.addOrReplaceProperty(refreshEvent.getComponent(Component.VEVENT), myUid);
+        refreshEvent.getComponent(Component.VEVENT).ifPresentOrElse(
+                vEvent -> ICalendarUtils.addOrReplaceProperty(vEvent, myUid),
+                () -> {
+                    throw new IllegalStateException("Missing refreshEvent component");
+                }
+        );
 
         CalendarRequest cr = new CalendarRequest(invite);
         SchedulePostMethod request =
@@ -115,14 +126,15 @@ public class SchedulePostMethodTest extends BaseTestCase {
         Calendar invite = getCalendarResource("scheduling/meeting_invitation.ics");
 
         // replace fields from template
-        VEvent event = (VEvent) invite.getComponent(Component.VEVENT);
+        VEvent event = (VEvent) invite.getComponent(Component.VEVENT).orElse(null);
+        assert event != null;
         ICalendarUtils.addOrReplaceProperty(event, new Organizer("mailto:rpolli@babel.it"));
         ParameterList plist = new ParameterList();
         plist.add(new PartStat("NEED-ACTION"));
 
         ICalendarUtils.addOrReplaceProperty(event, new Attendee(plist, "mailto:g@r.it"));
-        event.getProperties().add(new Attendee(plist, "mailto:roberto.polli@babel.it"));
-        event.getProperties().add(new Attendee(plist, "mailto:robipolli@gmail.com"));
+        event.add(new Attendee(plist, "mailto:roberto.polli@babel.it"));
+        event.add(new Attendee(plist, "mailto:robipolli@gmail.com"));
 
         ICalendarUtils.addOrReplaceProperty(event, new Uid(new DateTime().toString()));
 
@@ -157,7 +169,7 @@ public class SchedulePostMethodTest extends BaseTestCase {
             throws URISyntaxException, HttpException, IOException, CalDAV4JException {
         Calendar invite = BaseTestCase.getCalendarResource("scheduling/meeting_invitation.ics");
 
-        VEvent event = (VEvent) invite.getComponent(Component.VEVENT);
+        VEvent event = (VEvent) invite.getComponent(Component.VEVENT).orElse(null);
 
         // r@r.it invites GMAIL
         ICalendarUtils.addOrReplaceProperty(event, new Organizer("mailto:r@r.it"));
@@ -169,12 +181,14 @@ public class SchedulePostMethodTest extends BaseTestCase {
             log.info("PUT...");
 
             CalendarRequest cr = new CalendarRequest(invite);
+            String uidValue = event.getUid().orElseThrow(() ->
+                    new IllegalStateException("UID is missing")).getValue();
             HttpPutMethod request =
                     fixture.getMethodFactory()
                             .createPutMethod(
                                     caldavCredential.home
                                             + "/calendar/"
-                                            + event.getUid().getValue()
+                                            + uidValue
                                             + ".ics",
                                     cr);
 
@@ -218,7 +232,7 @@ public class SchedulePostMethodTest extends BaseTestCase {
 
         Calendar invite = getCalendarResource("scheduling/meeting_invitation.ics");
 
-        VEvent event = (VEvent) invite.getComponent(Component.VEVENT);
+        VEvent event = (VEvent) invite.getComponent(Component.VEVENT).orElse(null);
         ICalendarUtils.addOrReplaceProperty(event, new Organizer("mailto:rpolli@babel.it"));
         ParameterList plist = new ParameterList();
         plist.add(new PartStat("NEED-ACTION"));

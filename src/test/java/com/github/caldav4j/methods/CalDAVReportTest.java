@@ -176,7 +176,7 @@ public class CalDAVReportTest extends BaseTestCase {
                             .getComponents(Component.VEVENT));
         }
 
-        assertEquals(3, templist.size());
+        assertEquals(3, templist.getAll().size());
     }
 
     /**

@@ -37,6 +37,10 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
+import java.util.List;
+
 public class FunTest extends BaseTestCase {
     public FunTest() {
         super();
@@ -84,13 +88,12 @@ public class FunTest extends BaseTestCase {
 
     public static void main(String args[]) {
         try {
-            Recur recur = new Recur("FREQ=HOURLY");
-            DateTime startDate = new DateTime("20060101T010000Z");
-            DateTime endDate = new DateTime("20060105T050000Z");
-            DateTime baseDate = new DateTime("20050101T033300");
-            DateList dateList = recur.getDates(baseDate, startDate, endDate, Value.DATE_TIME);
-            for (int x = 0; x < dateList.size(); x++) {
-                DateTime d = (DateTime) dateList.get(x);
+            Recur<LocalDateTime> recur = new Recur<>("FREQ=HOURLY");
+            LocalDateTime startDate = LocalDateTime.parse("20060101T010000Z");
+            LocalDateTime endDate = LocalDateTime.parse("20060105T050000Z");
+            LocalDateTime baseDate = LocalDateTime.parse("20050101T033300");
+            List<LocalDateTime> dateList = recur.getDates(baseDate, startDate, endDate);
+            for (LocalDateTime d : dateList) {
                 log.info(d.toString());
             }
         } catch (Exception e) {
