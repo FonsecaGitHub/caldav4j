@@ -62,7 +62,9 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-/** @author Ankush Mishra */
+/**
+ * @author Ankush Mishra
+ */
 public class CalDAVReportTest extends BaseTestCase {
 
     private static final Logger log = LoggerFactory.getLogger(CalDAVReportTest.class);
@@ -132,7 +134,10 @@ public class CalDAVReportTest extends BaseTestCase {
 
     @Test
     public void queryPartialCalendar()
-            throws IOException, TransformerException, ParserConfigurationException, ParseException,
+            throws IOException,
+                    TransformerException,
+                    ParserConfigurationException,
+                    ParseException,
                     DavException {
         String collectionPath = fixture.getCollectionPath();
         Calendar calendar = null;
@@ -207,6 +212,8 @@ public class CalDAVReportTest extends BaseTestCase {
                 freeBusy.getDateTimeStart().orElse(null),
                 new DtStart<OffsetDateTime>("20060104T140000Z"));
         assertEquals(
-                "End Dates are not equal", freeBusy.getDateTimeEnd().orElse(null), new DtEnd<OffsetDateTime>("20060105T220000Z"));
+                "End Dates are not equal",
+                freeBusy.getDateTimeEnd().orElse(null),
+                new DtEnd<OffsetDateTime>("20060105T220000Z"));
     }
 }

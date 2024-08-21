@@ -17,14 +17,13 @@
 
 package com.github.caldav4j.support;
 
+import java.util.Arrays;
+import java.util.List;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Component;
 import net.fortuna.ical4j.model.ComponentList;
 import net.fortuna.ical4j.model.PropertyList;
 import net.fortuna.ical4j.transform.Transformer;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Calendar transformer that removes specified properties.

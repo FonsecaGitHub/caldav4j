@@ -55,26 +55,28 @@ public class SchedulePostMethodTest extends BaseTestCase {
     HttpHost hostConfig = createHostConfiguration();
 
     public static final String BEDEWORK_RTSVC_URL = "/pubcaldav/rtsvc";
+
     /** create a simple meeting POSTing to /Outbox and process a response */
     @Test
     public void testSimpeMeetingInvite_Accept() {
 
         Calendar invite = getCalendarResource("scheduling/meeting_invitation.ics");
         Uid myUid = new Uid(new DateTime().toString());
-        invite.getComponent(Component.VEVENT).ifPresentOrElse(
-                vEvent -> ICalendarUtils.addOrReplaceProperty(vEvent, myUid),
-                () -> {
-                    throw new IllegalStateException("Missing invite component");
-                }
-        );
+        invite.getComponent(Component.VEVENT)
+                .ifPresentOrElse(
+                        vEvent -> ICalendarUtils.addOrReplaceProperty(vEvent, myUid),
+                        () -> {
+                            throw new IllegalStateException("Missing invite component");
+                        });
 
         Calendar refreshEvent = getCalendarResource("scheduling/meeting_reply.ics");
-        refreshEvent.getComponent(Component.VEVENT).ifPresentOrElse(
-                vEvent -> ICalendarUtils.addOrReplaceProperty(vEvent, myUid),
-                () -> {
-                    throw new IllegalStateException("Missing refreshEvent component");
-                }
-        );
+        refreshEvent
+                .getComponent(Component.VEVENT)
+                .ifPresentOrElse(
+                        vEvent -> ICalendarUtils.addOrReplaceProperty(vEvent, myUid),
+                        () -> {
+                            throw new IllegalStateException("Missing refreshEvent component");
+                        });
 
         CalendarRequest cr = new CalendarRequest(invite);
         SchedulePostMethod request =
@@ -181,16 +183,14 @@ public class SchedulePostMethodTest extends BaseTestCase {
             log.info("PUT...");
 
             CalendarRequest cr = new CalendarRequest(invite);
-            String uidValue = event.getUid().orElseThrow(() ->
-                    new IllegalStateException("UID is missing")).getValue();
+            String uidValue =
+                    event.getUid()
+                            .orElseThrow(() -> new IllegalStateException("UID is missing"))
+                            .getValue();
             HttpPutMethod request =
                     fixture.getMethodFactory()
                             .createPutMethod(
-                                    caldavCredential.home
-                                            + "/calendar/"
-                                            + uidValue
-                                            + ".ics",
-                                    cr);
+                                    caldavCredential.home + "/calendar/" + uidValue + ".ics", cr);
 
             HttpResponse response = http.execute(hostConfig, request);
             if (response.getStatusLine().getStatusCode() != 200) {

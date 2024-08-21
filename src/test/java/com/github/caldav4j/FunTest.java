@@ -19,10 +19,9 @@ package com.github.caldav4j;
 import com.github.caldav4j.functional.support.CaldavFixtureHarness;
 import com.github.caldav4j.methods.HttpPropFindMethod;
 import com.github.caldav4j.util.CalDAVStatus;
-import net.fortuna.ical4j.model.DateList;
-import net.fortuna.ical4j.model.DateTime;
+import java.time.LocalDateTime;
+import java.util.List;
 import net.fortuna.ical4j.model.Recur;
-import net.fortuna.ical4j.model.parameter.Value;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -36,10 +35,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
-import java.util.List;
 
 public class FunTest extends BaseTestCase {
     public FunTest() {

@@ -21,7 +21,6 @@ import com.github.caldav4j.dialect.CalDavDialect;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.PropertyList;
-import net.fortuna.ical4j.model.property.Version;
 import net.fortuna.ical4j.model.property.immutable.ImmutableVersion;
 
 /**

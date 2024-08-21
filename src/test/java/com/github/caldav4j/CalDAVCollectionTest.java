@@ -33,7 +33,6 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.model.*;
 import net.fortuna.ical4j.model.component.CalendarComponent;
@@ -171,7 +170,9 @@ public class CalDAVCollectionTest extends BaseTestCase {
             assertEquals(ICalendarUtils.getUIDValue(c), ICS_GOOGLE_DAILY_NY_5PM_UID);
             Optional<CalendarComponent> calendarComponent = c.getComponent(Component.VEVENT);
             assertTrue(calendarComponent.isPresent());
-            assertNotNull(ICalendarUtils.getPropertyValue(calendarComponent.get(), Property.RECURRENCE_ID));
+            assertNotNull(
+                    ICalendarUtils.getPropertyValue(
+                            calendarComponent.get(), Property.RECURRENCE_ID));
         }
         // check if is in cache
 
@@ -181,10 +182,9 @@ public class CalDAVCollectionTest extends BaseTestCase {
     public void testGetCalendarByPath() throws Exception {
         Calendar calendar = null;
 
-            calendar =
-                    uncachedCollection.getCalendar(
-                            fixture.getHttpClient(), ICS_GOOGLE_DAILY_NY_5PM_UID + ".ics");
-
+        calendar =
+                uncachedCollection.getCalendar(
+                        fixture.getHttpClient(), ICS_GOOGLE_DAILY_NY_5PM_UID + ".ics");
 
         assertNotNull(calendar);
         VEvent vevent = ICalendarUtils.getFirstEvent(calendar);
@@ -218,8 +218,7 @@ public class CalDAVCollectionTest extends BaseTestCase {
                 collection.getEventResources(fixture.getHttpClient(), beginDate, endDate);
 
         for (Calendar calendar : l) {
-            List<CalendarComponent> vevents =
-                    calendar.getComponents(Component.VEVENT);
+            List<CalendarComponent> vevents = calendar.getComponents(Component.VEVENT);
             VEvent ve = (VEvent) vevents.get(0);
             String uid = ICalendarUtils.getUIDValue(ve);
             int correctNumberOfEvents = -1;
@@ -245,7 +244,9 @@ public class CalDAVCollectionTest extends BaseTestCase {
     }
 
     // TODO wait on floating test until we can pass timezones
-    /** @throws Exception */
+    /**
+     * @throws Exception
+     */
     @Test
     @Ignore
     public void testGetEventResourcesFloatingIssues() throws Exception {
@@ -311,7 +312,10 @@ public class CalDAVCollectionTest extends BaseTestCase {
         ve.add(uid);
         return ve;
     }
-    /** @throws Exception */
+
+    /**
+     * @throws Exception
+     */
     @Test
     public void testGetWithoutCacheThenWithCache() throws IOException {
         String newUid = "NEW_UID";
@@ -343,7 +347,10 @@ public class CalDAVCollectionTest extends BaseTestCase {
         }
         assertNull(e);
     }
-    /** @throws Exception */
+
+    /**
+     * @throws Exception
+     */
     @Test
     public void testUpdateEvent() throws Exception {
 
@@ -384,7 +391,8 @@ public class CalDAVCollectionTest extends BaseTestCase {
 
         // sanity
         assertNotNull(calendarList);
-        Optional<CalendarComponent> component = calendarList.get(0).getComponent(CalendarComponent.VEVENT);
+        Optional<CalendarComponent> component =
+                calendarList.get(0).getComponent(CalendarComponent.VEVENT);
         assertTrue(component.isPresent());
         assertEquals(ICS_ALL_DAY_JAN1_UID, ICalendarUtils.getUIDValue(component.get()));
     }

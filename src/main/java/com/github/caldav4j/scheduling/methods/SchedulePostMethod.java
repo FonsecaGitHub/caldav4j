@@ -5,16 +5,12 @@ import com.github.caldav4j.model.request.CalendarRequest;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.ComponentList;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.CalendarComponent;
 import net.fortuna.ical4j.model.component.VTimeZone;
 import net.fortuna.ical4j.model.property.Attendee;
-import net.fortuna.ical4j.model.property.Method;
-import net.fortuna.ical4j.model.property.Organizer;
 import net.fortuna.ical4j.model.property.immutable.ImmutableMethod;
 
 /**

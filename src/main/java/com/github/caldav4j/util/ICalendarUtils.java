@@ -23,7 +23,6 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
-
 import net.fortuna.ical4j.model.*;
 import net.fortuna.ical4j.model.component.CalendarComponent;
 import net.fortuna.ical4j.model.component.VEvent;
@@ -339,8 +338,7 @@ public class ICalendarUtils {
      * @return VEvent that does not have Recurrence ID
      */
     public static VTimeZone getTimezone(net.fortuna.ical4j.model.Calendar calendar) {
-        List<CalendarComponent> clist =
-                calendar.getComponents(Component.VTIMEZONE);
+        List<CalendarComponent> clist = calendar.getComponents(Component.VTIMEZONE);
         for (CalendarComponent o : clist) {
             return (VTimeZone) o;
         }

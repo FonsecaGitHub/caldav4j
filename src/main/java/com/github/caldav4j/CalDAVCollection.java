@@ -35,15 +35,12 @@ import java.util.List;
 import java.util.Random;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.Component;
-import net.fortuna.ical4j.model.ComponentList;
 import net.fortuna.ical4j.model.Date;
 import net.fortuna.ical4j.model.component.CalendarComponent;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.component.VTimeZone;
-import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Uid;
-import net.fortuna.ical4j.model.property.Version;
 import net.fortuna.ical4j.model.property.immutable.ImmutableCalScale;
 import net.fortuna.ical4j.model.property.immutable.ImmutableVersion;
 import net.fortuna.ical4j.util.CompatibilityHints;
@@ -70,6 +67,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CalDAVCollection extends CalDAVCalendarCollectionBase {
     private static final Logger log = LoggerFactory.getLogger(CalDAVCollection.class);
+
     // configuration settings
 
     public CalDAVCollection() {}
@@ -200,8 +198,7 @@ public class CalDAVCollection extends CalDAVCalendarCollectionBase {
 
         CalDAVResource resource = getCalDAVResourceByUID(httpClient, component, uid);
         Calendar calendar = resource.getCalendar();
-        List<CalendarComponent> eventList =
-                calendar.getComponents(component);
+        List<CalendarComponent> eventList = calendar.getComponents(component);
 
         // get a list of components to remove
         List<CalendarComponent> componentsToRemove = new ArrayList<>();
@@ -352,6 +349,7 @@ public class CalDAVCollection extends CalDAVCalendarCollectionBase {
     public String add(HttpClient httpClient, Calendar c) throws CalDAV4JException {
         return add(httpClient, c, true);
     }
+
     /**
      * Adds a calendar object to caldav collection using "UID.ics" as file name. <br>
      * <br>
@@ -577,7 +575,7 @@ public class CalDAVCollection extends CalDAVCalendarCollectionBase {
         // ok, so we got the resource...but has it been changed recently?
         if (calDAVResource != null
                 && calDAVResource.getCalendar()
-                != null) { // FIXME calDAVResource's calendar should not be null!
+                        != null) { // FIXME calDAVResource's calendar should not be null!
             String cachedEtag = calDAVResource.getResourceMetadata().getETag();
             if (cachedEtag.equals(currentEtag)) {
                 return calDAVResource;
@@ -760,8 +758,12 @@ public class CalDAVCollection extends CalDAVCalendarCollectionBase {
         List<Calendar> calendarList = getCalendarLight(httpClient, query);
 
         for (Calendar cal : calendarList) {
-            cal.getComponent(componentName).ifPresent(component ->
-                    propertyList.add(ICalendarUtils.getPropertyValue(component, propertyName)));
+            cal.getComponent(componentName)
+                    .ifPresent(
+                            component ->
+                                    propertyList.add(
+                                            ICalendarUtils.getPropertyValue(
+                                                    component, propertyName)));
         }
 
         return propertyList;
@@ -933,6 +935,7 @@ public class CalDAVCollection extends CalDAVCalendarCollectionBase {
 
         return list;
     }
+
     //
     // MultiGet queries
     //

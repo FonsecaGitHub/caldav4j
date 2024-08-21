@@ -398,7 +398,9 @@ public class CalDAV4JMethodFactory {
         return new HttpDeleteMethod(uri, etag);
     }
 
-    /** @return True or False based on the Calendar Validating Outputter setting. */
+    /**
+     * @return True or False based on the Calendar Validating Outputter setting.
+     */
     public boolean isCalendarValidatingOutputter() {
         return validatingOutputter;
     }

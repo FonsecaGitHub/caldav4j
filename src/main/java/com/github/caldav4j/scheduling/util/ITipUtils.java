@@ -5,7 +5,6 @@
 package com.github.caldav4j.scheduling.util;
 
 import com.github.caldav4j.exceptions.CalDAV4JException;
-
 import java.util.List;
 import java.util.TimeZone;
 import net.fortuna.ical4j.model.Calendar;

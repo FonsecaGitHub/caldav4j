@@ -41,14 +41,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 import net.fortuna.ical4j.model.Calendar;
-import net.fortuna.ical4j.model.Component;
 import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.component.CalendarComponent;
 import net.fortuna.ical4j.model.component.VEvent;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
@@ -373,12 +370,11 @@ public class CalDavFixture {
         return resPath;
     }*/
 
-
     public String getCaldavPutPath(String s) {
         Calendar cal = BaseTestCase.getCalendarResource(s);
 
         // Safely unwrap the Optional and handle the case where the component is not present
-        Optional<CalendarComponent> optionalComponent  = cal.getComponent("VEVENT");
+        Optional<CalendarComponent> optionalComponent = cal.getComponent("VEVENT");
 
         if (optionalComponent.isPresent()) {
             Optional<Property> property = optionalComponent.get().getProperty("UID");
@@ -390,8 +386,6 @@ public class CalDavFixture {
 
         return null;
     }
-
-
 
     public CalDAV4JMethodFactory getMethodFactory() {
         return methodFactory;

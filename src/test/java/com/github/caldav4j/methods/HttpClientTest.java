@@ -26,7 +26,6 @@ import java.io.IOException;
 import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.property.ProdId;
-import net.fortuna.ical4j.model.property.Version;
 import net.fortuna.ical4j.model.property.immutable.ImmutableVersion;
 import org.junit.Ignore;
 import org.junit.Test;

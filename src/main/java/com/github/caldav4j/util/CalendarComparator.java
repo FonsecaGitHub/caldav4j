@@ -3,7 +3,6 @@ package com.github.caldav4j.util;
 import java.time.temporal.Temporal;
 import java.util.Comparator;
 import java.util.Objects;
-
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.DtStart;
