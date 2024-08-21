@@ -329,7 +329,7 @@ public class CalDAV4JMethodFactory {
      * @return the instance
      */
     public HttpGetMethod createGetMethod(String uri) {
-        return new HttpGetMethod(uri, getCalendarBuilderInstance());
+        return new HttpGetMethod(uri, new CalendarBuilder());
     }
 
     /**

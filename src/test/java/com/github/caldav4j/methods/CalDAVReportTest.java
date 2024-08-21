@@ -29,6 +29,7 @@ import com.github.caldav4j.util.ICalendarUtils;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.text.ParseException;
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
@@ -203,9 +204,9 @@ public class CalDAVReportTest extends BaseTestCase {
         /// Check returned Calendar
         assertEquals(
                 "Start Dates are not equal",
-                freeBusy.getStartDate(),
-                new DtStart("20060104T140000Z"));
+                freeBusy.getDateTimeStart().orElse(null),
+                new DtStart<OffsetDateTime>("20060104T140000Z"));
         assertEquals(
-                "End Dates are not equal", freeBusy.getEndDate(), new DtEnd("20060105T220000Z"));
+                "End Dates are not equal", freeBusy.getDateTimeEnd().orElse(null), new DtEnd<OffsetDateTime>("20060105T220000Z"));
     }
 }

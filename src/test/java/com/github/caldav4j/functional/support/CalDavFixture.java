@@ -384,11 +384,7 @@ public class CalDavFixture {
             Optional<Property> property = optionalComponent.get().getProperty("UID");
 
             if (property.isPresent()) {
-                String uid = property.get().getValue() + ".ics";
-
-                if (StringUtils.isNotEmpty(s)) {
-                    return uid + ".ics";
-                }
+                return property.get().getValue() + ".ics";
             }
         }
 
